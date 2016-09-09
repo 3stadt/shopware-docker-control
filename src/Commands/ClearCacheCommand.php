@@ -14,9 +14,8 @@ class ClearCacheCommand extends Command
 {
     protected function configure()
     {
-        $this->setName('clear-cache')->setAliases([
-            'cc'
-        ])
+        $this->setName('clear-cache')
+            ->setAliases(['cc'])
             ->setDescription('Clears the cache on a shopware project.')
             ->addArgument(
                 'project',

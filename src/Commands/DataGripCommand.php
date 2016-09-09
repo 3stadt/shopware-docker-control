@@ -14,9 +14,8 @@ class DataGripCommand extends Command
 {
     protected function configure()
     {
-        $this->setName('datagrip')->setAliases([
-            'dg'
-        ])
+        $this->setName('datagrip')
+            ->setAliases(['dg'])
             ->setDescription('Start dtagrip')
         ;
     }

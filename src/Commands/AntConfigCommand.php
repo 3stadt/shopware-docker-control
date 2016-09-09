@@ -13,9 +13,8 @@ class AntConfigCommand extends Command
 {
     protected function configure()
     {
-        $this->setName('ant-config')->setAliases([
-            'ac'
-        ])
+        $this->setName('ant-config')
+            ->setAliases(['ac'])
             ->setDescription('Perform ant-configure on a project')
             ->addArgument(
                 'project',
@@ -38,14 +37,14 @@ class AntConfigCommand extends Command
         $project = $input->getArgument('project');
 
         $command = ['docker-compose'];
-        $command[] = "run";
-        $command[] = "-eANT_OPTS=-D\"file.encoding=UTF-8\"";
-        $command[] = "-u" . ($input->getOption('userId'));
-        $command[] = "swag_cli";
-        $command[] = "ant";
-        $command[] = "-f";
-        $command[] = "/var/www/html/".escapeshellcmd($project)."/build/build.xml";
-        $command[] = "configure";
+        $command[] = 'run';
+        $command[] = '-eANT_OPTS=-D"file.encoding=UTF-8"';
+        $command[] = '-u' . ($input->getOption('userId'));
+        $command[] = 'swag_cli';
+        $command[] = 'ant';
+        $command[] = '-f';
+        $command[] = '/var/www/html/'.escapeshellcmd($project).'/build/build.xml';
+        $command[] = 'configure';;
 
         $composeService = new DockerComposeService($input, $output);
         $composeService->execute($command);

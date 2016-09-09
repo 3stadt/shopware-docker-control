@@ -12,9 +12,9 @@ class StartContainersCommand extends Command
 {
     protected function configure()
     {
-        $this->setName('up')->setAliases([
-                's', 'u'
-            ])->setDescription('Start docker containers in DOCKER_BASE_DIR')
+        $this->setName('up')
+            ->setAliases(['s', 'u'])
+            ->setDescription('Start docker containers in DOCKER_BASE_DIR')
             ->addOption(
                 'testing',
                 't',

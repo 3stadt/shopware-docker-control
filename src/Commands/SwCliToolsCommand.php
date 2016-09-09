@@ -13,9 +13,8 @@ class SwCliToolsCommand extends Command
 {
     protected function configure()
     {
-        $this->setName('sw-cli-tools')->setAliases([
-            'sw'
-        ])
+        $this->setName('sw-cli-tools')
+            ->setAliases(['sw'])
             ->setDescription('Use the sw-cli tools inside a folder/project.')
             ->addOption(
                 'project',

@@ -15,9 +15,8 @@ class BuildUnitCommand extends Command
 {
     protected function configure()
     {
-        $this->setName('build-unit')->setAliases([
-            'bu'
-        ])
+        $this->setName('build-unit')
+            ->setAliases(['bu'])
             ->setDescription('Perform ant build-unit on a project')
             ->addArgument(
                 'project',
@@ -95,12 +94,12 @@ class BuildUnitCommand extends Command
 
         $debugConfigTpl = require getenv('SWDC_DEBUG_CONFIG_PATH');
         if(!is_array($debugConfigTpl)){
-            throw new InvalidArgumentException("SWDC_DEBUG_CONFIG_PATH does not point to a php file returning an array.");
+            throw new InvalidArgumentException('SWDC_DEBUG_CONFIG_PATH does not point to a php file returning an array.');
         }
 
         $config = require $shopwareConfig;
         if(!is_array($config)){
-            throw new \Exception("Could not load shopware config for adding new debug options.");
+            throw new \Exception('Could not load shopware config for adding new debug options.');
         }
 
         $debugConfig = array_merge($config, $debugConfigTpl);

@@ -12,9 +12,9 @@ class ListShopwareDirectoriesCommand extends Command
 {
     protected function configure()
     {
-        $this->setName('list')->setAliases([
-                'l'
-            ])->setDescription('Shows a list of assumed showpare installations in your configured project base dir')
+        $this->setName('list')
+            ->setAliases(['l'])
+            ->setDescription('Shows a list of assumed showpare installations in your configured project base dir')
         ;
     }
 
@@ -23,7 +23,7 @@ class ListShopwareDirectoriesCommand extends Command
         $projectBaseDir = getenv('PROJECT_BASE_DIR');
         $directoryContent = array_diff(scandir($projectBaseDir), array('..', '.'));
 
-        $output->writeln("<info>The following folders in your project base dir contain a shopware.php file:</info>");
+        $output->writeln('<info>The following folders in your project base dir contain a shopware.php file:</info>');
 
         foreach ($directoryContent as $item) {
             $path = $projectBaseDir.DIRECTORY_SEPARATOR.$item;
