@@ -1,0 +1,43 @@
+#!/usr/bin/env php
+<?php
+
+use Dotenv\Dotenv;
+use Symfony\Component\Console\Application;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+if (file_exists(getenv('HOME') . '/.env')) {
+    $dotenv = new Dotenv(getenv('HOME'));
+} elseif ((file_exists(__DIR__ . '/../.env'))) {
+    $dotenv = new Dotenv(__DIR__ . '/..');
+} else {
+    $dotenv = new Dotenv(__DIR__);
+}
+$dotenv->load();
+
+try {
+    // Required ENV vars for this app in production
+    $dotenv->required([
+        'DOCKER_BASE_DIR',
+        'PROJECT_BASE_DIR',
+        'USER_NAME',
+        'USER_ID',
+        'DEFAULT_PROJECT',
+    ]);
+} catch (\Dotenv\Exception\ValidationException $e) {
+    echo $e->getMessage();
+    exit(1);
+}
+
+$application = new Application('Shopware Docker Control');
+$application->addCommands([new ShopwareDockerControl\Commands\BuildContainersCommand()]);
+$application->addCommands([new ShopwareDockerControl\Commands\StartContainersCommand()]);
+$application->addCommands([new ShopwareDockerControl\Commands\StopContainersCommand()]);
+$application->addCommands([new ShopwareDockerControl\Commands\ListShopwareDirectoriesCommand()]);
+$application->addCommands([new ShopwareDockerControl\Commands\AntConfigCommand()]);
+$application->addCommands([new ShopwareDockerControl\Commands\BuildUnitCommand()]);
+$application->addCommands([new ShopwareDockerControl\Commands\SwCliToolsCommand()]);
+$application->addCommands([new ShopwareDockerControl\Commands\ClearCacheCommand()]);
+$application->addCommands([new ShopwareDockerControl\Commands\DataGripCommand()]);
+
+$application->run();

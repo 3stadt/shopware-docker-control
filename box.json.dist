@@ -1,0 +1,27 @@
+{
+  "chmod": "0755",
+  "alias": "swdc.phar",
+  "compactors": [
+    "Herrera\\Box\\Compactor\\Json",
+    "Herrera\\Box\\Compactor\\Php"
+  ],
+  "directories": ["src"],
+  "files": [
+    "vendor/autoload.php"
+  ],
+  "finder": [
+    {
+      "name": "*.php",
+      "exclude": ["tests"],
+      "in": [
+        "vendor",
+        "src"
+      ]
+    }
+  ],
+  "git-version": "package_version",
+  "intercept": true,
+  "main": "bin/swdc",
+  "output": "swdc.phar",
+  "stub": true
+}

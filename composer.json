@@ -1,0 +1,10 @@
+{
+    "autoload": {
+        "psr-4": {"ShopwareDockerControl\\": "src/"}
+    },
+    "require": {
+        "symfony/console": "^3.1",
+        "vlucas/phpdotenv": "^2.3",
+        "symfony/process": "^3.1"
+    }
+}
