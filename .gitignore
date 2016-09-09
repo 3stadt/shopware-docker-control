@@ -2,3 +2,4 @@
 vendor
 .env
 box.json
+/swdc.phar
