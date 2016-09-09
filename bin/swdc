@@ -6,14 +6,10 @@ use Symfony\Component\Console\Application;
 
 require __DIR__ . '/../vendor/autoload.php';
 
+$dotenv = new Dotenv(getenv('HOME'));
 if (file_exists(getenv('HOME') . '/.env')) {
-    $dotenv = new Dotenv(getenv('HOME'));
-} elseif ((file_exists(__DIR__ . '/../.env'))) {
-    $dotenv = new Dotenv(__DIR__ . '/..');
-} else {
-    $dotenv = new Dotenv(__DIR__);
+    $dotenv->load();
 }
-$dotenv->load();
 
 try {
     // Required ENV vars for this app in production
