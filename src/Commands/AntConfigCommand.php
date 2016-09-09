@@ -32,7 +32,7 @@ class AntConfigCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute (  InputInterface $input, OutputInterface $output)
     {
         $project = $input->getArgument('project');
 
@@ -44,7 +44,7 @@ class AntConfigCommand extends Command
         $command[] = 'ant';
         $command[] = '-f';
         $command[] = '/var/www/html/'.escapeshellcmd($project).'/build/build.xml';
-        $command[] = 'configure';;
+        $command[] = 'configure';;;;;
 
         $composeService = new DockerComposeService($input, $output);
         $composeService->execute($command);
