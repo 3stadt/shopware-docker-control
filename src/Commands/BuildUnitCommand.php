@@ -93,18 +93,39 @@ class BuildUnitCommand extends Command
         }
 
         $debugConfigTpl = require getenv('SWDC_DEBUG_CONFIG_PATH');
-        if(!is_array($debugConfigTpl)){
+        if (!is_array($debugConfigTpl)) {
             throw new InvalidArgumentException('SWDC_DEBUG_CONFIG_PATH does not point to a php file returning an array.');
         }
 
         $config = require $shopwareConfig;
-        if(!is_array($config)){
+        if (!is_array($config)) {
             throw new \Exception('Could not load shopware config for adding new debug options.');
         }
 
         $debugConfig = array_merge($config, $debugConfigTpl);
-        $debugConfig = "<?php\n\nreturn ".var_export($debugConfig, true).';';
+        $debugConfig = "<?php\n\nreturn ".$this->var_export_short($debugConfig).';';
         
         file_put_contents($shopwareConfig, $debugConfig);
+    }
+
+    private function var_export_short($var, $indent = "")
+    {
+        switch (gettype($var)) {
+            case "string":
+                return '"' . addcslashes($var, "\\\$\"\r\n\t\v\f") . '"';
+            case "array":
+                $indexed = array_keys($var) === range(0, count($var) - 1);
+                $r = [];
+                foreach ($var as $key => $value) {
+                    $r[] = "$indent    " .
+                        ($indexed ? "" : $this->var_export_short($key) . " => ") .
+                        $this->var_export_short($value, "$indent    ");
+                }
+                return "[\n" . implode(",\n", $r) . "\n" . $indent . "]";
+            case "boolean":
+                return $var ? "TRUE" : "FALSE";
+            default:
+                return var_export($var, true);
+        }
     }
 }
