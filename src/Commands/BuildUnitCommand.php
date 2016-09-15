@@ -108,6 +108,13 @@ class BuildUnitCommand extends Command
         file_put_contents($shopwareConfig, $debugConfig);
     }
 
+    /**
+     * Returns a var_export version of an array, but with short syntax
+     *
+     * @param array $var
+     * @param string $indent
+     * @return mixed|string
+     */
     private function var_export_short($var, $indent = "")
     {
         switch (gettype($var)) {

@@ -20,6 +20,11 @@ class DockerComposeService
         $this->output = $output;
     }
 
+    /**
+     * Creates a new ShellCommandRunnerService and executes the command inside DOCKER_BASE_DIR
+     *
+     * @param array $command
+     */
     public function execute(array $command)
     {
         $shellService = new ShellCommandRunnerService($this->input, $this->output);

@@ -22,6 +22,10 @@ class ShellCommandRunnerService
     }
 
     /**
+     * Executes the given command inside the given working directory.
+     * This method uses the symfony Process component and outputs all
+     * console messages directly.
+     *
      * @param string $comandString
      * @param string $workingDir
      */
