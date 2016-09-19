@@ -43,9 +43,9 @@ class AntConfigCommand extends Command
         $command[] = 'ant';
         $command[] = '-f';
         $command[] = '/var/www/html/'.escapeshellcmd($project).'/build/build.xml';
-        $command[] = 'configure';;;;;
+        $command[] = 'configure';
 
         $composeService = new DockerComposeService($input, $output);
-        $composeService->execute($command);
+        $composeService->executeInteractive($command);
     }
 }

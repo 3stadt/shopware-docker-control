@@ -14,6 +14,7 @@ class ShellCommandRunnerService
     private $output;
     private $processTimeout = 3600;
     private $processIdleTimeout = 120;
+    private $tty = false;
 
     public function __construct(InputInterface $input, OutputInterface $output)
     {
@@ -35,6 +36,7 @@ class ShellCommandRunnerService
         $process = new Process($comandString, $workingDir);
         $process->setTimeout($this->processTimeout);
         $process->setIdleTimeout($this->processIdleTimeout);
+        $process->setTty($this->tty);
         $process->run(function ($type, $buffer) use ($output) {
             $message = trim($buffer);
             if (empty($buffer)) {
@@ -58,5 +60,10 @@ class ShellCommandRunnerService
     {
         $this->processIdleTimeout = $seconds;
         return $this;
+    }
+
+    public function setTty($bool)
+    {
+        $this->tty = $bool;
     }
 }

@@ -30,4 +30,11 @@ class DockerComposeService
         $shellService = new ShellCommandRunnerService($this->input, $this->output);
         $shellService->execute(implode(' ', $command), getenv('DOCKER_BASE_DIR'));
     }
+
+    public function executeInteractive($command)
+    {
+        $shellService = new ShellCommandRunnerService($this->input, $this->output);
+        $shellService->setTty(true);
+        $shellService->execute(implode(' ', $command), getenv('DOCKER_BASE_DIR'));
+    }
 }
