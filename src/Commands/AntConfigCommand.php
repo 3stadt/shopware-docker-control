@@ -32,7 +32,8 @@ class AntConfigCommand extends Command
         ;
     }
 
-    protected function execute (  InputInterface $input, OutputInterface $output){
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         $project = $input->getArgument('project');
 
         $command = ['docker-compose'];

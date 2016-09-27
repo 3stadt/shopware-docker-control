@@ -7,7 +7,13 @@ use Symfony\Component\Console\Application;
 require __DIR__ . '/../vendor/autoload.php';
 
 $dotenv = new Dotenv(getenv('HOME'));
-if (file_exists(getenv('HOME') . '/.env')) {
+$pharPath = dirname(Phar::running(false));
+
+if (file_exists($pharPath . '/.env')) {
+    $dotenv = new Dotenv($pharPath);
+    $dotenv->load();
+}
+elseif (file_exists(getenv('HOME') . '/.env')) {
     $dotenv->load();
 }
 
@@ -25,15 +31,15 @@ try {
     exit(1);
 }
 
-$application = new Application('Shopware Docker Control');
-$application->addCommands([new ShopwareDockerControl\Commands\BuildContainersCommand()]);
-$application->addCommands([new ShopwareDockerControl\Commands\StartContainersCommand()]);
-$application->addCommands([new ShopwareDockerControl\Commands\StopContainersCommand()]);
-$application->addCommands([new ShopwareDockerControl\Commands\ListShopwareDirectoriesCommand()]);
-$application->addCommands([new ShopwareDockerControl\Commands\AntConfigCommand()]);
-$application->addCommands([new ShopwareDockerControl\Commands\BuildUnitCommand()]);
-$application->addCommands([new ShopwareDockerControl\Commands\SwCliToolsCommand()]);
-$application->addCommands([new ShopwareDockerControl\Commands\ClearCacheCommand()]);
-$application->addCommands([new ShopwareDockerControl\Commands\DataGripCommand()]);
+$app = new Application('Shopware Docker Control');
+$app->addCommands([new ShopwareDockerControl\Commands\BuildContainersCommand()]);
+$app->addCommands([new ShopwareDockerControl\Commands\StartContainersCommand()]);
+$app->addCommands([new ShopwareDockerControl\Commands\StopContainersCommand()]);
+$app->addCommands([new ShopwareDockerControl\Commands\ListShopwareDirectoriesCommand()]);
+$app->addCommands([new ShopwareDockerControl\Commands\AntConfigCommand()]);
+$app->addCommands([new ShopwareDockerControl\Commands\BuildUnitCommand()]);
+$app->addCommands([new ShopwareDockerControl\Commands\SwCliToolsCommand()]);
+$app->addCommands([new ShopwareDockerControl\Commands\ClearCacheCommand()]);
+$app->addCommands([new ShopwareDockerControl\Commands\DataGripCommand()]);
 
-$application->run();
+$app->run();

@@ -3,7 +3,6 @@
 namespace ShopwareDockerControl\Commands;
 
 use ShopwareDockerControl\Services\DockerComposeService;
-use ShopwareDockerControl\Services\ShellCommandRunnerService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputArgument;

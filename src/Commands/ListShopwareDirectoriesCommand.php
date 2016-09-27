@@ -2,18 +2,16 @@
 
 namespace ShopwareDockerControl\Commands;
 
-use ShopwareDockerControl\Services\DockerComposeService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ListShopwareDirectoriesCommand extends Command
 {
     protected function configure()
     {
-        $this->setName('list')
-            ->setAliases(['l'])
+        $this->setName('find-shopware')
+            ->setAliases(['fs'])
             ->setDescription('Shows a list of assumed showpare installations in your configured project base dir')
         ;
     }
@@ -27,7 +25,7 @@ class ListShopwareDirectoriesCommand extends Command
 
         foreach ($directoryContent as $item) {
             $path = $projectBaseDir.DIRECTORY_SEPARATOR.$item;
-            if($this->isShopwarePath($path)){
+            if ($this->isShopwarePath($path)) {
                 $output->writeln($item);
             }
         }

@@ -27,13 +27,16 @@ class ShellCommandRunnerService
      * This method uses the symfony Process component and outputs all
      * console messages directly.
      *
-     * @param string $comandString
+     * @param string $commandString
      * @param string $workingDir
      */
-    public function execute($comandString, $workingDir)
+    public function execute($commandString, $workingDir)
     {
         $output = $this->output;
-        $process = new Process($comandString, $workingDir);
+        $this->output->writeln('<info>' . "Switching to directory:\n$workingDir" . '</info>');
+        $this->output->writeln('<info>' . "Executing command:\n$commandString\n" . '</info>');
+
+        $process = new Process($commandString, $workingDir);
         $process->setTimeout($this->processTimeout);
         $process->setIdleTimeout($this->processIdleTimeout);
         $process->setTty($this->tty);

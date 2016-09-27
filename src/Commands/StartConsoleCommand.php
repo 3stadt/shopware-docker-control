@@ -8,13 +8,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class BuildContainersCommand extends Command
-{
+class StartConsoleCommand extends Command {
     protected function configure()
     {
-        $this->setName('build-containers')
-            ->setAliases(['bc'])
-            ->setDescription('(Re)build all docker containers in DOCKER_BASE_DIR')
+        $this->setName('start-console')
+            ->setAliases(['sc'])
+            ->setDescription('Starts a bash in a new swag_cli container')
             ->addOption(
                 'testing',
                 't',
@@ -31,7 +30,9 @@ class BuildContainersCommand extends Command
             $command[] = '-f';
             $command[] = 'docker-compose-testing.yml';
         }
-        $command[] = 'build';
+        $command[] = 'run';
+        $command[] = 'swag_cli';
+        $command[] = 'bash';
 
         $composeService = new DockerComposeService($input, $output);
         $composeService->execute($command);

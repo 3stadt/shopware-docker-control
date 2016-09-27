@@ -13,7 +13,7 @@ class StopContainersCommand extends Command
     protected function configure()
     {
         $this->setName('stop')
-            ->setAliases(['d','o'])
+            ->setAliases(['d'])
             ->setDescription('Start docker containers in DOCKER_BASE_DIR')
             ->addOption(
                 'testing',
