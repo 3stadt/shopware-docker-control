@@ -35,6 +35,6 @@ class StartConsoleCommand extends Command {
         $command[] = 'bash';
 
         $composeService = new DockerComposeService($input, $output);
-        $composeService->execute($command);
+        $composeService->executeInteractive($command);
     }
 }
