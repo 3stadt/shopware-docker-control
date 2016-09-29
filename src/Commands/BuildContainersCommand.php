@@ -12,8 +12,8 @@ class BuildContainersCommand extends Command
 {
     protected function configure()
     {
-        $this->setName('build-containers')
-            ->setAliases(['bc'])
+        $this->setName('rebuild-containers')
+            ->setAliases(['bc','rbc'])
             ->setDescription('(Re)build all docker containers in DOCKER_BASE_DIR')
             ->addOption(
                 'testing',

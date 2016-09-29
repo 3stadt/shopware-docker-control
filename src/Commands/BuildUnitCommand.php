@@ -3,6 +3,7 @@
 namespace ShopwareDockerControl\Commands;
 
 use ShopwareDockerControl\Services\DockerComposeService;
+use ShopwareDockerControl\Services\ShellCommandRunnerService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputArgument;
@@ -71,18 +72,18 @@ class BuildUnitCommand extends Command
             return;
         }
 
-        $command = ['docker-compose'];
-        $command[] = 'run';
-        $command[] = '-eANT_OPTS=-D"file.encoding=UTF-8"';
-        $command[] = '-u' . ($input->getOption('userId'));
-        $command[] = 'swag_cli';
-        $command[] = 'bash';
-        $command[] = '-c';
-        $command[] = '"ln';
+        $pBaseDir = rtrim(getenv('PROJECT_BASE_DIR'), '/');
+
+        if(file_exists($pBaseDir.'/'.$project.'/.git/hooks/pre-commit')) {
+            unlink($pBaseDir . '/' . $project . '/.git/hooks/pre-commit');
+        }
+        $command = ['ln'];
         $command[] = '-sf';
-        $command[] = '/var/www/html/'.$project.'/build/gitHooks/pre-commit';
-        $command[] = '/var/www/html/'.$project.'/.git/hooks/pre-commit"';
-        $composeService->execute($command);
+        $command[] = $pBaseDir.'/'.$project.'/build/gitHooks/pre-commit';
+        $command[] = $pBaseDir.'/'.$project.'/.git/hooks/pre-commit';
+
+        $executor = new ShellCommandRunnerService($input,$output);
+        $executor->execute(implode(' ', $command), $pBaseDir.'/'.$project);
     }
 
     private function createDebugConfig($shopwareConfig)
