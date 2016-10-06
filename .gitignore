@@ -1,5 +1,5 @@
 .idea
 vendor
-.env
+.swdc_env
 box.json
 /swdc.phar

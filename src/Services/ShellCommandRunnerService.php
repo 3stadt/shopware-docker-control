@@ -36,10 +36,23 @@ class ShellCommandRunnerService
         $this->output->writeln('<info>' . "Switching to directory:\n$workingDir" . '</info>');
         $this->output->writeln('<info>' . "Executing command:\n$commandString\n" . '</info>');
 
+        $phpVersion = $this->input->getOption('php-version');
+        $testHost = $this->input->getOption('test-host');
+
+        $phpVersion = empty($phpVersion) ? '7' : $phpVersion;
+        $testHost = empty($testHost) ? 'shopware.localhost' : $testHost;
+
         $process = new Process($commandString, $workingDir);
         $process->setTimeout($this->processTimeout);
         $process->setIdleTimeout($this->processIdleTimeout);
         $process->setTty($this->tty);
+        $process->setEnv([
+            'SWDOCKER_PHP_VERSION' => $phpVersion,
+            'SWDOCKER_TEST_HOST' => $testHost,
+            'SWDOCKER_VARNISH' => $this->input->getOption('use-varnish'),
+            'SWDOCKER_IONCUBE' => $this->input->getOption('use-ioncube'),
+            'SWDOCKER_XDEBUG' => $this->input->getOption('use-xdebug'),
+        ]);
         $process->run(function ($type, $buffer) use ($output) {
             $message = trim($buffer);
             if (empty($buffer)) {

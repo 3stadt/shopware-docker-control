@@ -3,17 +3,17 @@
 
 use Dotenv\Dotenv;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\InputOption;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$dotenv = new Dotenv(getenv('HOME'));
+$dotenv = new Dotenv(getenv('HOME'), '.swdc_env');
 $pharPath = dirname(Phar::running(false));
 
-if (file_exists($pharPath . '/.env')) {
-    $dotenv = new Dotenv($pharPath);
+if (file_exists($pharPath . '/.swdc_env')) {
+    $dotenv = new Dotenv($pharPath, '.swdc_env');
     $dotenv->load();
-}
-elseif (file_exists(getenv('HOME') . '/.env')) {
+} elseif (file_exists(getenv('HOME') . '/.swdc_env')) {
     $dotenv->load();
 }
 
@@ -32,6 +32,15 @@ try {
 }
 
 $app = new Application('Shopware Docker Control');
+
+$app->getDefinition()->addOptions([
+    new InputOption('--php-version', '-php', InputOption::VALUE_OPTIONAL, 'Which php version to use. (Used to build docker image directory name)', getenv('SWDOCKER_PHP_VERSION')),
+    new InputOption('--test-host', '-th', InputOption::VALUE_OPTIONAL, 'Which test host to use.', getenv('SWDOCKER_PHP_VERSION')),
+    new InputOption('--use-varnish', '-vs', InputOption::VALUE_OPTIONAL, 'If set, use varnish image. (Used to build docker image directory name)', getenv('SWDOCKER_VARNISH')),
+    new InputOption('--use-ioncube', '-ion', InputOption::VALUE_OPTIONAL, 'If set, use ioncube image. (Used to build docker image directory name)', getenv('SWDOCKER_IONCUBE')),
+    new InputOption('--use-xdebug', '-xdb', InputOption::VALUE_OPTIONAL, 'If set, use xdebug image. (Used to build docker image directory name)', getenv('SWDOCKER_XDEBUG')),
+]);
+
 $app->addCommands([new ShopwareDockerControl\Commands\BuildContainersCommand()]);
 $app->addCommands([new ShopwareDockerControl\Commands\StartContainersCommand()]);
 $app->addCommands([new ShopwareDockerControl\Commands\StopContainersCommand()]);
