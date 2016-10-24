@@ -8,7 +8,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class StartConsoleCommand extends Command {
+class StartConsoleCommand extends Command
+{
     protected function configure()
     {
         $this->setName('start-console')

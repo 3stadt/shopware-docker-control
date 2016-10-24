@@ -44,12 +44,12 @@ $app->getDefinition()->addOptions([
 $app->addCommands([new ShopwareDockerControl\Commands\BuildContainersCommand()]);
 $app->addCommands([new ShopwareDockerControl\Commands\StartContainersCommand()]);
 $app->addCommands([new ShopwareDockerControl\Commands\StopContainersCommand()]);
+$app->addCommands([new ShopwareDockerControl\Commands\RestartContainersCommand()]);
 $app->addCommands([new ShopwareDockerControl\Commands\ListShopwareDirectoriesCommand()]);
 $app->addCommands([new ShopwareDockerControl\Commands\AntConfigCommand()]);
 $app->addCommands([new ShopwareDockerControl\Commands\BuildUnitCommand()]);
 $app->addCommands([new ShopwareDockerControl\Commands\SwCliToolsCommand()]);
 $app->addCommands([new ShopwareDockerControl\Commands\ClearCacheCommand()]);
-$app->addCommands([new ShopwareDockerControl\Commands\DataGripCommand()]);
 $app->addCommands([new ShopwareDockerControl\Commands\StartConsoleCommand()]);
 
 $app->run();

@@ -52,6 +52,10 @@ class BuildUnitCommand extends Command
         $project = $input->getArgument('project');
 
         $command = ['docker-compose'];
+        if (file_exists(getenv('DOCKER_BASE_DIR').DIRECTORY_SEPARATOR.'docker-bu.yml')) {
+            $command[] = '-f';
+            $command[] = 'docker-bu.yml';
+        }
         $command[] = 'run';
         $command[] = '-eANT_OPTS=-D"file.encoding=UTF-8"';
         $command[] = '-u' . ($input->getOption('userId'));
@@ -65,7 +69,7 @@ class BuildUnitCommand extends Command
         $composeService->execute($command);
 
         $shopwareConfig = $input->getOption('basePath').DIRECTORY_SEPARATOR.$project.DIRECTORY_SEPARATOR.'config.php';
-        
+
         $this->createDebugConfig($shopwareConfig);
 
         if ($input->getOption('noSymlink') || strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
@@ -74,7 +78,7 @@ class BuildUnitCommand extends Command
 
         $pBaseDir = rtrim(getenv('PROJECT_BASE_DIR'), '/');
 
-        if(file_exists($pBaseDir.'/'.$project.'/.git/hooks/pre-commit')) {
+        if (file_exists($pBaseDir.'/'.$project.'/.git/hooks/pre-commit')) {
             unlink($pBaseDir . '/' . $project . '/.git/hooks/pre-commit');
         }
         $command = ['ln'];
@@ -82,7 +86,7 @@ class BuildUnitCommand extends Command
         $command[] = $pBaseDir.'/'.$project.'/build/gitHooks/pre-commit';
         $command[] = $pBaseDir.'/'.$project.'/.git/hooks/pre-commit';
 
-        $executor = new ShellCommandRunnerService($input,$output);
+        $executor = new ShellCommandRunnerService($input, $output);
         $executor->execute(implode(' ', $command), $pBaseDir.'/'.$project);
     }
 
@@ -104,7 +108,7 @@ class BuildUnitCommand extends Command
 
         $debugConfig = array_merge($config, $debugConfigTpl);
         $debugConfig = "<?php\n\nreturn ".$this->var_export_short($debugConfig).';';
-        
+
         file_put_contents($shopwareConfig, $debugConfig);
     }
 
