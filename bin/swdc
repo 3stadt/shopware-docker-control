@@ -51,5 +51,6 @@ $app->addCommands([new ShopwareDockerControl\Commands\BuildUnitCommand()]);
 $app->addCommands([new ShopwareDockerControl\Commands\SwCliToolsCommand()]);
 $app->addCommands([new ShopwareDockerControl\Commands\ClearCacheCommand()]);
 $app->addCommands([new ShopwareDockerControl\Commands\StartConsoleCommand()]);
+$app->addCommands([new ShopwareDockerControl\Commands\DataGripCommand()]);
 
 $app->run();
