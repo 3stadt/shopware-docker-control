@@ -49,9 +49,9 @@ class ShellCommandRunnerService
         $process->setEnv([
             'SWDOCKER_PHP_VERSION' => $phpVersion,
             'SWDOCKER_TEST_HOST' => $testHost,
-            'SWDOCKER_VARNISH' => $this->input->getOption('use-varnish'),
-            'SWDOCKER_IONCUBE' => $this->input->getOption('use-ioncube'),
-            'SWDOCKER_XDEBUG' => $this->input->getOption('use-xdebug'),
+            'SWDOCKER_VARNISH' => $this->input->getOption('use-varnish') || !empty(getenv('SWDOCKER_VARNISH')) ? '-varnish' : '',
+            'SWDOCKER_IONCUBE' => $this->input->getOption('use-ioncube') || !empty(getenv('SWDOCKER_IONCUBE')) ? '-ioncube' : '',
+            'SWDOCKER_XDEBUG' => $this->input->getOption('use-xdebug') || !empty(getenv('SWDOCKER_XDEBUG'))? '-xdebug' : '',
         ]);
         $process->run(function ($type, $buffer) use ($output) {
             $message = trim($buffer);
