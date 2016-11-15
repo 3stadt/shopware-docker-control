@@ -1,0 +1,17 @@
+parameters:
+    git_dir: .
+    bin_dir: vendor/bin
+    stop_on_failure: false
+    tasks:
+      git_blacklist: ~
+      git_commit_message: ~
+      git_conflict: ~
+      phpcsfixer:
+        config_file: ~
+        config: ~
+        fixers: []
+        level: psr2
+        verbose: true
+      phpmd: ~
+      phpspec: ~
+    extensions: []

@@ -3,3 +3,4 @@ vendor
 .swdc_env
 box.json
 /swdc.phar
+/grumphp.yml
