@@ -12,6 +12,5 @@ parameters:
         fixers: []
         level: psr2
         verbose: true
-      phpmd: ~
       phpspec: ~
     extensions: []

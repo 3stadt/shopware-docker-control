@@ -33,18 +33,21 @@ class StopContainersCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $command = ['docker-compose'];
+        $composeService = new DockerComposeService($input, $output);
+
         if ($input->getOption('testing')) {
             $command[] = '-f';
             $command[] = 'docker-compose-testing.yml';
         }
+
         if ($input->getOption('down')) {
             $command[] = 'down';
             $command[] = '--remove-orphans';
-        } else {
-            $command[] = 'stop';
+            $composeService->execute($command);
+            return;
         }
 
-        $composeService = new DockerComposeService($input, $output);
+        $command[] = 'stop';
         $composeService->execute($command);
     }
 }

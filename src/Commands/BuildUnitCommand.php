@@ -126,13 +126,13 @@ class BuildUnitCommand extends Command
                 return '"' . addcslashes($var, "\\\$\"\r\n\t\v\f") . '"';
             case "array":
                 $indexed = array_keys($var) === range(0, count($var) - 1);
-                $r = [];
+                $returnval = [];
                 foreach ($var as $key => $value) {
-                    $r[] = "$indent    " .
+                    $returnval[] = "$indent    " .
                         ($indexed ? "" : $this->var_export_short($key) . " => ") .
                         $this->var_export_short($value, "$indent    ");
                 }
-                return "[\n" . implode(",\n", $r) . "\n" . $indent . "]";
+                return "[\n" . implode(",\n", $returnval) . "\n" . $indent . "]";
             case "boolean":
                 return $var ? "TRUE" : "FALSE";
             default:

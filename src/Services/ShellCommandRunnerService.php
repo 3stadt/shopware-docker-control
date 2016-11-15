@@ -60,9 +60,9 @@ class ShellCommandRunnerService
             }
             if (Process::ERR === $type) {
                 $output->writeln('<fg=red>' . $message . '</>');
-            } else {
-                $output->writeln('<info>' . $message . '</info>');
+                return;
             }
+            $output->writeln('<info>' . $message . '</info>');
         });
     }
 

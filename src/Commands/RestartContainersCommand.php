@@ -50,9 +50,9 @@ class RestartContainersCommand extends Command
             return;
         }
 
-        $up = $this->getApplication()->find('up');
+        $upCommand = $this->getApplication()->find('up');
         $upArguments = array_merge($arguments, ['command' => 'up']);
         $upInput = new ArrayInput($upArguments);
-        $up->run($upInput, $output);
+        $upCommand->run($upInput, $output);
     }
 }

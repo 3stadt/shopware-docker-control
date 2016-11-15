@@ -11,7 +11,6 @@
         "phpro/grumphp": "^0.9.6",
         "friendsofphp/php-cs-fixer": "^1.12",
         "phpspec/phpspec": "^3.1",
-        "squizlabs/php_codesniffer": "^2.7",
-        "phpmd/phpmd": "^2.4"
+        "squizlabs/php_codesniffer": "^2.7"
     }
 }
