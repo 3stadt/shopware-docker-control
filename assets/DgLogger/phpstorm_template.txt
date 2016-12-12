@@ -1,0 +1,5 @@
+// TODO: Remove after debug
+require_once '/var/www/html/DgLogger.php';
+$logger = new \DgLogger\DgLogger('/var/www/html/$NAME$.txt');
+$logger->write($VALUE$);
+// TODO: Remove after debug
