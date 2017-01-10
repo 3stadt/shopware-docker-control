@@ -35,7 +35,7 @@ $app = new Application('Shopware Docker Control');
 
 $app->getDefinition()->addOptions([
     new InputOption('--php-version', '-php', InputOption::VALUE_OPTIONAL, 'Which php version to use. (Used to build docker image directory name)', getenv('SWDOCKER_PHP_VERSION')),
-    new InputOption('--test-host', '-th', InputOption::VALUE_OPTIONAL, 'Which test host to use.', getenv('SWDOCKER_PHP_VERSION')),
+    new InputOption('--test-host', '-th', InputOption::VALUE_OPTIONAL, 'Which test host to use.', getenv('TEST_HOST')),
     new InputOption('--use-varnish', '-a', InputOption::VALUE_NONE, 'If set, use varnish image. (Used to build docker image directory name)'),
     new InputOption('--use-ioncube', '-i', InputOption::VALUE_NONE, 'If set, use ioncube image. (Used to build docker image directory name)'),
     new InputOption('--use-xdebug', '-x', InputOption::VALUE_NONE, 'If set, use xdebug image. (Used to build docker image directory name)'),
