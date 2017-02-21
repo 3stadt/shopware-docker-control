@@ -9,3 +9,4 @@ pipelines:
           - composer install
           - curl -LSs https://box-project.github.io/box2/installer.php | php
           - ./box.phar build
+          - curl -X POST "https://${BB_AUTH_STRING}@api.bitbucket.org/2.0/repositories/3stadt/shopware-docker-control/downloads" --form files=@"swdc.phar"
