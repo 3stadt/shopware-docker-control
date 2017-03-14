@@ -24,6 +24,10 @@ class DockerComposeService
      * Creates a new ShellCommandRunnerService and executes the command inside DOCKER_BASE_DIR
      *
      * @param array $command
+     * @throws \Symfony\Component\Process\Exception\RuntimeException
+     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
+     * @throws \Symfony\Component\Process\Exception\InvalidArgumentException
+     * @throws \Symfony\Component\Process\Exception\LogicException
      */
     public function execute(array $command)
     {

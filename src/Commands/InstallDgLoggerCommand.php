@@ -22,13 +22,13 @@ class InstallDgLoggerCommand extends Command
         $logger = file_get_contents($srcDir . 'DgLogger.php');
         file_put_contents($loggerDest, $logger);
         $output->writeln(sprintf(
-            "<info>Copied DgLogger.php to %s</info>",
+            '<info>Copied DgLogger.php to %s</info>',
             $loggerDest
         ));
-        $output->writeln("If you are using <info>PHPStorm</info>, use the following live template inside your projects for logging:");
-        $output->writeln("");
-        $output->writeln("$template");
-        $output->writeln("");
-        $output->writeln("Otherwise edit and copy the template code by hand where needed.");
+        $output->writeln('If you are using <info>PHPStorm</info>, use the following live template inside your projects for logging:');
+        $output->writeln('');
+        $output->writeln($template);
+        $output->writeln('');
+        $output->writeln('Otherwise edit and copy the template code by hand where needed.');
     }
 }

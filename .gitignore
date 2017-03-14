@@ -4,3 +4,4 @@ vendor
 box.json
 /swdc.phar
 /grumphp.yml
+/.php_cs.cache

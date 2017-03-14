@@ -58,7 +58,7 @@ class BuildUnitCommand extends Command
         }
         $command[] = 'run';
         $command[] = '-eANT_OPTS=-D"file.encoding=UTF-8"';
-        $command[] = '-u' . ($input->getOption('userId'));
+        $command[] = '-u' . $input->getOption('userId');
         $command[] = 'swag_cli';
         $command[] = 'ant';
         $command[] = '-f';
@@ -72,7 +72,7 @@ class BuildUnitCommand extends Command
 
         $this->createDebugConfig($shopwareConfig);
 
-        if ($input->getOption('noSymlink') || strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+        if ($input->getOption('noSymlink') || 0 === stripos(PHP_OS, 'WIN')) {
             return;
         }
 
@@ -122,9 +122,9 @@ class BuildUnitCommand extends Command
     private function var_export_short($var, $indent = "")
     {
         switch (gettype($var)) {
-            case "string":
+            case 'string':
                 return '"' . addcslashes($var, "\\\$\"\r\n\t\v\f") . '"';
-            case "array":
+            case 'array':
                 $indexed = array_keys($var) === range(0, count($var) - 1);
                 $returnval = [];
                 foreach ($var as $key => $value) {
@@ -133,8 +133,8 @@ class BuildUnitCommand extends Command
                         $this->var_export_short($value, "$indent    ");
                 }
                 return "[\n" . implode(",\n", $returnval) . "\n" . $indent . "]";
-            case "boolean":
-                return $var ? "TRUE" : "FALSE";
+            case 'boolean':
+                return $var ? 'TRUE' : 'FALSE';
             default:
                 return var_export($var, true);
         }

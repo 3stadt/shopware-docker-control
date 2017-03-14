@@ -39,7 +39,7 @@ class AntConfigCommand extends Command
         $command = ['docker-compose'];
         $command[] = 'run';
         $command[] = '-eANT_OPTS=-D"file.encoding=UTF-8"';
-        $command[] = '-u' . ($input->getOption('userId'));
+        $command[] = '-u' . $input->getOption('userId');
         $command[] = 'swag_cli';
         $command[] = 'ant';
         $command[] = '-f';

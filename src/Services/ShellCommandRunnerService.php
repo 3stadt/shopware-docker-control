@@ -4,6 +4,7 @@ namespace ShopwareDockerControl\Services;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Process\Process;
 
 class ShellCommandRunnerService
@@ -29,10 +30,15 @@ class ShellCommandRunnerService
      *
      * @param string $commandString
      * @param string $workingDir
+     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
+     * @throws \Symfony\Component\Process\Exception\RuntimeException
+     * @throws \Symfony\Component\Process\Exception\InvalidArgumentException
+     * @throws \Symfony\Component\Process\Exception\LogicException
      */
     public function execute($commandString, $workingDir)
     {
         $output = $this->output;
+        $input = $this->input;
         $this->output->writeln('<info>' . "Switching to directory:\n$workingDir" . '</info>');
         $this->output->writeln('<info>' . "Executing command:\n$commandString\n" . '</info>');
 
@@ -51,18 +57,22 @@ class ShellCommandRunnerService
             'SWDOCKER_TEST_HOST' => $testHost,
             'SWDOCKER_VARNISH' => $this->input->getOption('use-varnish') || !empty(getenv('SWDOCKER_VARNISH')) ? '-varnish' : '',
             'SWDOCKER_IONCUBE' => $this->input->getOption('use-ioncube') || !empty(getenv('SWDOCKER_IONCUBE')) ? '-ioncube' : '',
-            'SWDOCKER_XDEBUG' => $this->input->getOption('use-xdebug') || !empty(getenv('SWDOCKER_XDEBUG'))? '-xdebug' : '',
+            'SWDOCKER_XDEBUG' => $this->input->getOption('use-xdebug') || !empty(getenv('SWDOCKER_XDEBUG')) ? '-xdebug' : '',
         ]);
-        $process->run(function ($type, $buffer) use ($output) {
-            $message = trim($buffer);
-            if (empty($buffer)) {
+        $process->run(function ($type, $buffer) use ($input, $output) {
+            $io = new SymfonyStyle($input, $output);
+            if (empty(trim($buffer))) {
                 return;
             }
             if (Process::ERR === $type) {
-                $output->writeln('<fg=red>' . $message . '</>');
+                $output->writeln('<error>'.trim($buffer).'</error>');
                 return;
             }
-            $output->writeln('<info>' . $message . '</info>');
+            if (substr($buffer, -1) === PHP_EOL) {
+                $io->writeln(trim($buffer));
+                return;
+            }
+            $io->write(trim($buffer));
         });
     }
 
