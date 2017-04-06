@@ -32,6 +32,7 @@ class StartConsoleCommand extends Command
             $command[] = 'docker-compose-testing.yml';
         }
         $command[] = 'run';
+        $command[] = '--rm';
         $command[] = 'swag_cli';
         $command[] = 'bash';
 

@@ -46,6 +46,7 @@ class SwCliToolsCommand extends Command
         $command = ['docker-compose'];
         $command[] = 'run';
         $command[] = '-u' . $input->getOption('userId');
+        $command[] = '--rm';
         $command[] = 'swag_cli';
         $command[] = 'bash';
         $command[] = '-c';

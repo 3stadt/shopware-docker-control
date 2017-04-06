@@ -46,6 +46,7 @@ class CreateCodeCoverageCommand extends Command
         $command = ['docker-compose'];
         $command[] = 'run';
         $command[] = '-u' . $input->getOption('userId');
+        $command[] = '--rm';
         $command[] = 'swag_cli_x';
         $command[] = 'bash';
         $command[] = '-c';
