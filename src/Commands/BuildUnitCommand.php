@@ -2,6 +2,7 @@
 
 namespace ShopwareDockerControl\Commands;
 
+use Riimu\Kit\PHPEncoder\PHPEncoder;
 use ShopwareDockerControl\Services\DockerComposeService;
 use ShopwareDockerControl\Services\ShellCommandRunnerService;
 use Symfony\Component\Console\Command\Command;
@@ -13,6 +14,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class BuildUnitCommand extends Command
 {
+    /**
+     * @var PHPEncoder
+     */
+    private $encoder;
+
     protected function configure()
     {
         $this->setName('build-unit')
@@ -107,7 +113,7 @@ class BuildUnitCommand extends Command
         }
 
         $debugConfig = array_merge($config, $debugConfigTpl);
-        $debugConfig = "<?php\n\nreturn ".$this->var_export_short($debugConfig).';';
+        $debugConfig = "<?php\n\nreturn " . $this->var_export_short($debugConfig) . ';';
 
         file_put_contents($shopwareConfig, $debugConfig);
     }
@@ -116,27 +122,23 @@ class BuildUnitCommand extends Command
      * Returns a var_export version of an array, but with short syntax
      *
      * @param array $var
-     * @param string $indent
-     * @return mixed|string
+     * @return string
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
+     * @throws \Riimu\Kit\PHPEncoder\InvalidOptionException
      */
-    private function var_export_short($var, $indent = "")
+    private function var_export_short(array $var)
     {
-        switch (gettype($var)) {
-            case 'string':
-                return '"' . addcslashes($var, "\\\$\"\r\n\t\v\f") . '"';
-            case 'array':
-                $indexed = array_keys($var) === range(0, count($var) - 1);
-                $returnval = [];
-                foreach ($var as $key => $value) {
-                    $returnval[] = "$indent    " .
-                        ($indexed ? '' : $this->var_export_short($key) . ' => ') .
-                        $this->var_export_short($value, "$indent    ");
-                }
-                return "[\n" . implode(",\n", $returnval) . "\n" . $indent . "]";
-            case 'boolean':
-                return $var ? 'TRUE' : 'FALSE';
-            default:
-                return var_export($var, true);
+        if ($this->encoder === null) {
+            $this->encoder = new PHPEncoder([
+                'array.short' => true,
+                'array.inline' => 80,
+                'array.omit' => true,
+                'array.indent' => 4,
+                'boolean.capitalize' => false,
+                'null.capitalize' => false,
+            ]);
         }
+        return $this->encoder->encode($var);
     }
 }
