@@ -8,13 +8,13 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class BuildContainersCommand extends Command
+class UpdateImagesCommand extends Command
 {
     protected function configure()
     {
-        $this->setName('rebuild-containers')
-            ->setAliases(['bc', 'rbc'])
-            ->setDescription('(Re)build all docker containers in DOCKER_BASE_DIR')
+        $this->setName('update-images')
+            ->setAliases(['bc', 'ui'])
+            ->setDescription('Pull/Update all docker images')
             ->addOption(
                 'testing',
                 't',
@@ -31,7 +31,7 @@ class BuildContainersCommand extends Command
             $command[] = '-f';
             $command[] = 'docker-compose-testing.yml';
         }
-        $command[] = 'build';
+        $command[] = 'pull';
 
         $composeService = new DockerComposeService($input, $output);
         $composeService->execute($command);
