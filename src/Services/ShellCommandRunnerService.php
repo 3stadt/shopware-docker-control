@@ -58,6 +58,7 @@ class ShellCommandRunnerService
             'SWDOCKER_VARNISH' => $this->input->getOption('use-varnish') || !empty(getenv('SWDOCKER_VARNISH')) ? '-varnish' : '',
             'SWDOCKER_IONCUBE' => $this->input->getOption('use-ioncube') || !empty(getenv('SWDOCKER_IONCUBE')) ? '-ioncube' : '',
             'SWDOCKER_XDEBUG' => $this->input->getOption('use-xdebug') || !empty(getenv('SWDOCKER_XDEBUG')) ? '-xdebug' : '',
+            'PATH' => getenv('PATH')
         ]);
         $process->run(function ($type, $buffer) use ($input, $output) {
             $io = new SymfonyStyle($input, $output);
